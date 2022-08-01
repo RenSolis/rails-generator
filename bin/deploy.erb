@@ -1,0 +1,9 @@
+#!/bin/bash
+
+docker login
+
+docker buildx build \
+  --file Dockerfile.prod \
+  --platform linux/amd64 \
+  --tag <%= registry %>/<%= app_name.underscore %>_app:latest \
+  --push .

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e # means if we get an error we want to stop the image 'cause we will get a broken image
+
+if [ -f /app/tmp/pids/server.pid ]; then
+  rm /app/tmp/pids/server.pid
+fi
+
+bin/rails db:migrate 2>/dev/null || DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bin/rails db:setup
+
+exec bundle exec "$@"
